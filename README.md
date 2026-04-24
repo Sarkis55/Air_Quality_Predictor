@@ -1,4 +1,5 @@
 # Air_Quality_Predictor
+By Sarkis Shil-Gevorkyan, Bhavna Sreekumar, and Christopher Strouse
 
 ## Objective: 
 Can we accurately predict periods of elevated air quality risk (AQI > 75) using pollutant levels and temporal patterns to enable early public health intervention?
