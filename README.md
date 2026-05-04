@@ -1,22 +1,54 @@
-# Air_Quality_Predictor
-By Sarkis Shil-Gevorkyan, Bhavna Sreekumar, and Christopher Strouse
+# Air Quality Predictor
 
-## Objective: 
-Can we accurately predict periods of elevated air quality risk (AQI > 75) using pollutant levels and temporal patterns to enable early public health intervention?
+### Predicting Unsafe Air Quality (AQI > 100) Using Environmental, Weather, and Demographic Data
 
-This approach can be especially valuable for protecting sensitive populations such as children, the elderly, and individuals with respiratory conditions. “Predicting AQI” is the main target but we can go further and frame it as a Public health early warning system and identify high-risk locations and high-risk time periods. This model can help communities anticipate periods of poor air quality and take preventive actions such as limiting outdoor exposure, especially for vulnerable populations.
+**Authors:**  
+Bhavna Sreekumar  
+Sarkis Shil-Gevorkyan  
+Christopher Strouse  
 
---- 
-### Data Source: 
-- https://www.epa.gov/outdoor-air-quality-data/download-daily-data
-- We’ll use the datasets from here using Pollutant: PM2.5, Geographic Area: California, Monitor Site: All Sites for 2021, 2022, 2023, 2024, and 2025. 
+---
 
-### Target Variable:
-- Safe (AQI ≤ 75)
-- At Risk (AQI > 75)
+## Project Objective
 
-### Features to Use:
-- PM2.5 concentration (primary pollutant driving AQI)
-- Month and Season (to capture temporal and seasonal patterns)
-- Location (County) to capture geographic variation in air quality
-- Optional: Future work could incorporate additional pollutants and weather data
+The goal of this project is to predict whether a given day will experience **unsafe air quality (AQI > 100)** using environmental, weather, and demographic features.
+
+This problem is important because poor air quality has significant public health impacts, particularly in densely populated regions. By accurately predicting unsafe AQI days, this model can support early warnings and preventative action.
+
+---
+
+## Predictive Questions
+
+- **Primary Question:**  
+  Can we accurately predict whether AQI will be unsafe using historical environmental and demographic data?
+
+- **Secondary Question:**  
+  Which features have the strongest influence on unsafe AQI levels?
+
+---
+
+## Dataset
+
+The dataset combines multiple sources:
+
+- **Environmental Data:** PM2.5, Ozone  
+- **Weather Data:** Temperature, Wind, Precipitation  
+- **Temporal Features:** Season, Weekend  
+- **Demographic Data:** Population  
+
+> Note: Due to file size, datasets are stored externally (see Data Access section below).
+
+---
+
+## Data Access
+
+Datasets are hosted in Github under "Datasets" 
+
+### To Run the Notebook:
+
+1. Open the dataset link  
+2. Click **“Add shortcut to Drive”**  
+3. Mount Drive in Colab:
+   ```python
+   from google.colab import drive
+   drive.mount('/content/drive')
