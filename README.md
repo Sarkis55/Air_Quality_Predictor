@@ -11,30 +11,47 @@ Christopher Strouse
 
 ## Project Objective
 
-The goal of this project is to predict whether a given day will experience **unsafe air quality (AQI > 100)** using environmental, weather, and demographic features.
+The goal of this project is to predict whether a given day will experience unsafe air quality conditions (AQI > 100) using environmental, meteorological, temporal, and demographic variables.
 
-This problem is important because poor air quality has significant public health impacts, particularly in densely populated regions. By accurately predicting unsafe AQI days, this model can support early warnings and preventative action.
+This problem is important because poor air quality has major public health impacts, particularly in densely populated and environmentally vulnerable regions. Predictive modeling can support early warning systems, environmental monitoring, and public health preparedness.
 
 ---
 
 ## Predictive Questions
 
-- **Primary Question:**  
-  Can we accurately predict whether AQI will be unsafe using historical environmental and demographic data?
+### Primary Question
+Can machine learning models accurately predict unsafe AQI conditions using environmental and demographic data?
 
-- **Secondary Question:**  
-  Which features have the strongest influence on unsafe AQI levels?
+### Secondary Questions
+- Which environmental and weather-related variables most strongly influence unsafe AQI conditions?
+- How do different machine learning algorithms perform under severe class imbalance conditions?
+- Can explainable AI methods improve understanding of AQI prediction behavior?
 
 ---
 
 ## Dataset
 
-The dataset combines multiple sources:
+The project integrates multiple public datasets to build a county-level air quality prediction framework for California.
 
-- **Environmental Data:** PM2.5, Ozone  
-- **Weather Data:** Temperature, Wind, Precipitation  
-- **Temporal Features:** Season, Weekend  
-- **Demographic Data:** Population  
+### Data Sources
+
+- **EPA Air Quality Data (2021–2025)**  
+  Daily AQI, PM2.5, and ozone observations from the U.S. Environmental Protection Agency (EPA)
+
+- **NOAA Weather Data**  
+  Historical weather observations including temperature, precipitation, wind speed, and related atmospheric variables
+
+- **U.S. Census Population Data**  
+  County-level demographic and population estimates
+
+### Engineered Features
+
+Additional features created during preprocessing include:
+
+- Season
+- Weekend indicator
+- Temperature range
+- Rain indicators
 
 ---
 
@@ -42,7 +59,7 @@ The dataset combines multiple sources:
 
 Due to file size limitations, datasets are stored in Google Drive:
 
-👉 **[INSERT YOUR GOOGLE DRIVE LINK HERE]**
+https://drive.google.com/drive/folders/1ynkHP16cOvcZ6zCXRGuHYju9hGEbfB7I?usp=sharing
 
 ---
 
@@ -52,68 +69,105 @@ Due to file size limitations, datasets are stored in Google Drive:
 2. Click **“Add shortcut to Drive”**  
 3. Ensure the folder is saved directly in **My Drive**  
 4. Open the notebook in **Google Colab**  
-5. Run the following to mount Drive:
+5. Run the following to mount Google Drive:
 
 ```python
 from google.colab import drive
 drive.mount('/content/drive')
 ```
 
+---
+
 ## Models Used
 
-Three classification models were implemented:
+Three machine learning classification models were implemented and compared:
 
-- **Logistic Regression** — baseline interpretable model  
-- **Random Forest** — captures nonlinear relationships and feature interactions  
-- **XGBoost** — boosting method for improved performance  
+- **Logistic Regression**  
+  Baseline interpretable classification model
+
+- **Random Forest**  
+  Tree-based ensemble model capable of capturing nonlinear feature interactions
+
+- **XGBoost**  
+  Gradient boosting model optimized for predictive performance and handling complex relationships
 
 ---
 
 ## Model Evaluation
 
-Due to class imbalance (~2% unsafe AQI days), accuracy alone is not sufficient.
+Because unsafe AQI observations represented a small minority of the dataset, the project emphasized evaluation metrics appropriate for class imbalance.
 
-We prioritized:
+### Evaluation Metrics
 
-- **AUC (Area Under ROC Curve)** — overall classification performance  
-- **Recall (Class 1)** — ability to detect unsafe AQI days  
-- **Precision (Class 1)** — minimizing false alarms  
+- **AUC (Area Under ROC Curve)** — overall classification performance
+- **Recall (Class 1)** — ability to correctly identify unsafe AQI conditions
+- **Precision (Class 1)** — reduction of false alarms
+- **F1-Score** — balance between precision and recall
+
+Cross-validation and hyperparameter tuning were also applied to improve model robustness and generalization performance.
 
 ---
 
 ## Key Findings
 
-- **PM2.5 is the dominant predictor** of AQI levels  
-- Models achieved near-perfect performance when PM2.5 was included (AUC ≈ 0.999+)  
-- Removing PM2.5 significantly reduced model performance  
-- Other variables (ozone, population, weather) provide additional but weaker signal  
+- Ozone concentration consistently emerged as one of the strongest independent predictors of unsafe AQI conditions
+- Weather-related variables such as temperature range, precipitation, wind speed, and seasonal patterns contributed meaningful predictive signal
+- Seasonal effects captured broader environmental conditions associated with wildfire activity and summer heat
+- XGBoost achieved the strongest overall AUC and accuracy performance
+- Logistic Regression achieved the strongest recall for unsafe AQI observations under class imbalance conditions
+- Feature importance analysis and SHAP interpretation improved model explainability and highlighted the importance of environmental context in AQI forecasting
+- PM2.5 initially produced unrealistically high performance because it directly contributes to AQI calculation, so it was removed from the final predictor set to improve methodological validity
 
 ---
 
-## Final Model
+## Final Model Evaluation
 
-The **Tuned Random Forest** was selected as the final model due to its balance between precision and recall.
+Multiple models were evaluated, including Logistic Regression, Random Forest, and XGBoost.
+
+While XGBoost achieved the strongest overall AUC and accuracy, Random Forest and Logistic Regression provided valuable interpretability and comparative insights under severe class imbalance conditions. The project emphasized comparative model evaluation rather than relying on a single performance metric.
+
+---
+
+## Explainability & Feature Importance
+
+The project incorporated explainable AI techniques including:
+
+- Feature importance analysis
+- SHAP (SHapley Additive exPlanations)
+
+These methods improved transparency by identifying which environmental and meteorological variables most strongly influenced model predictions.
 
 ---
 
 ## Limitations
 
-- Heavy reliance on PM2.5 limits generalizability  
-- Severe class imbalance (~2% unsafe days)  
-- Limited external features (e.g., traffic, industrial activity)  
+- Severe class imbalance (~2% unsafe AQI observations)
+- Limited availability of external environmental variables such as wildfire intensity, traffic density, and industrial emissions
+- Weather data was geographically limited relative to statewide AQI coverage
+- Environmental conditions can vary significantly across California regions and seasons
 
 ---
 
 ## Future Improvements
 
-- Incorporate additional environmental and policy data  
-- Apply time-series modeling techniques  
-- Enhance feature engineering (spatial + temporal patterns)  
+Potential future enhancements include:
+
+- Incorporating wildfire activity and smoke intensity data
+- Adding traffic and industrial emissions datasets
+- Expanding spatial weather coverage across California counties
+- Applying time-series forecasting methods
+- Improving spatial and temporal feature engineering
+- Exploring advanced imbalance handling techniques
 
 ---
 
 ## Repository Structure
 
+- `Air_Quality_Project.ipynb` — Fully executed notebook
+- `README.md` — Project overview and instructions
+- `requirements.txt` — Python dependencies
+- `models/` — Saved trained models
+- `figures/` — Visualizations and plots
 
 ---
 
@@ -129,4 +183,11 @@ pip install -r requirements.txt
 
 ## Conclusion
 
-This project demonstrates that unsafe AQI levels can be predicted with high accuracy, with **PM2.5 serving as the most critical feature**. The model highlights the importance of environmental monitoring in supporting public health decision-making.
+This project demonstrated how machine learning techniques can be applied to predict unsafe air quality conditions using environmental, meteorological, temporal, and demographic variables.
+
+The analysis showed that ozone concentration, weather-related variables, and seasonal patterns all contributed meaningful predictive signal for AQI classification. Integrating multiple external datasets improved the overall analytical framework and provided a more comprehensive representation of environmental conditions across California counties.
+
+The project also highlighted the challenges associated with predicting rare environmental risk events under severe class imbalance conditions. Feature importance analysis and SHAP interpretation improved transparency by identifying which variables most strongly influenced model predictions.
+
+Overall, the project demonstrated how explainable machine learning methods can support environmental monitoring and public health forecasting initiatives.
+````
